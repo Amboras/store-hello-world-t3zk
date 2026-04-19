@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import { ArrowRight, Truck, Shield, RotateCcw } from 'lucide-react'
+import { ArrowRight, Truck, Shield, RotateCcw, Sparkles, Star } from 'lucide-react'
 import CollectionSection from '@/components/marketing/collection-section'
 import { useCollections } from '@/hooks/use-collections'
 import { trackMetaEvent } from '@/lib/meta-pixel'
@@ -29,27 +29,52 @@ export default function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-muted/30 overflow-hidden">
-        <div className="container-custom grid lg:grid-cols-2 gap-8 items-center py-section lg:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-muted/50 via-background to-muted/30">
+        {/* Decorative background elements */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+          <div className="absolute -bottom-32 -left-20 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
+          <div
+            className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+              backgroundSize: '32px 32px',
+            }}
+          />
+        </div>
+
+        <div className="container-custom relative grid lg:grid-cols-2 gap-12 items-center py-section lg:py-36">
           {/* Text Content */}
-          <div className="space-y-6 animate-fade-in-up">
-            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
-              New Collection
-            </p>
-            <h1 className="text-display font-heading font-semibold text-balance">
-              Elevate Your Everyday
+          <div className="space-y-8 animate-fade-in-up">
+            {/* Eyebrow badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-background/60 px-4 py-1.5 backdrop-blur-sm">
+              <Sparkles className="h-3.5 w-3.5 text-accent" strokeWidth={2} />
+              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                New Collection · Fall 2025
+              </p>
+            </div>
+
+            <h1 className="text-display font-heading font-semibold text-balance leading-[1.05]">
+              Elevate Your{' '}
+              <span className="relative inline-block">
+                <span className="relative z-10 italic text-accent">Everyday</span>
+                <span className="absolute inset-x-0 bottom-1 h-2 bg-accent/15 -z-0" aria-hidden />
+              </span>
             </h1>
+
             <p className="text-lg text-muted-foreground max-w-md leading-relaxed">
               Thoughtfully designed products that bring beauty and function to your daily rituals.
             </p>
+
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/products"
-                className="btn-brand-primary inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold uppercase tracking-wide transition-opacity"
+                className="group btn-brand-primary inline-flex items-center gap-2 px-8 py-3.5 text-sm font-semibold uppercase tracking-wide transition-all hover:gap-3 hover:shadow-lg hover:shadow-foreground/10"
                 prefetch={true}
               >
                 Shop Now
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link
                 href="/about"
@@ -59,18 +84,62 @@ export default function HomePage() {
                 Our Story
               </Link>
             </div>
+
+            {/* Social proof */}
+            <div className="flex items-center gap-4 pt-4">
+              <div className="flex -space-x-2">
+                {[0, 1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="h-8 w-8 rounded-full border-2 border-background bg-gradient-to-br from-accent/40 to-accent/10"
+                  />
+                ))}
+              </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-0.5">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star key={i} className="h-3.5 w-3.5 fill-accent text-accent" />
+                  ))}
+                  <span className="ml-1.5 text-xs font-semibold">4.9</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Loved by 10,000+ customers</p>
+              </div>
+            </div>
           </div>
 
           {/* Hero Image */}
-          <div className="relative aspect-[4/5] lg:aspect-[3/4] bg-muted rounded-sm overflow-hidden animate-fade-in">
-            <Image
-              src={HERO_PLACEHOLDER}
-              alt="Hero - New Collection"
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-              priority
-            />
+          <div className="relative animate-fade-in">
+            {/* Floating tag — top */}
+            <div className="absolute -top-3 -left-3 z-20 hidden sm:flex items-center gap-2 rounded-full bg-background px-4 py-2 shadow-xl ring-1 ring-foreground/5">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <p className="text-xs font-semibold uppercase tracking-wide">Just Dropped</p>
+            </div>
+
+            <div className="relative aspect-[4/5] lg:aspect-[3/4] bg-muted rounded-sm overflow-hidden shadow-2xl shadow-foreground/10 ring-1 ring-foreground/5">
+              <Image
+                src={HERO_PLACEHOLDER}
+                alt="Hero - New Collection"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover transition-transform duration-[1.5s] ease-out hover:scale-105"
+                priority
+              />
+              {/* Subtle overlay for depth */}
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/10 via-transparent to-transparent" />
+            </div>
+
+            {/* Floating tag — bottom */}
+            <div className="absolute -bottom-4 -right-3 z-20 hidden sm:block rounded-sm bg-background p-4 shadow-xl ring-1 ring-foreground/5 max-w-[200px]">
+              <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">Featured</p>
+              <p className="mt-1 font-heading text-lg font-semibold leading-tight">
+                Essentials Edit
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">From $48</p>
+            </div>
+
+            {/* Decorative corner accent */}
+            <div className="absolute -top-8 -right-8 -z-10 h-32 w-32 rounded-full border border-accent/20" />
+            <div className="absolute -bottom-12 -left-12 -z-10 h-48 w-48 rounded-full border border-foreground/10" />
           </div>
         </div>
       </section>
